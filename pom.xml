@@ -25,8 +25,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>14</source>
-                    <target>14</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -54,17 +54,6 @@
         </resources>
     </build>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>maven-snapshots</id>
-            <url>https://repository.apache.org/content/repositories/snapshots/</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>maven-shade-plugin</id>
-            <url>https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-shade-plugin</url>
-        </pluginRepository>
-    </pluginRepositories>
-
     <repositories>
         <repository>
             <id>spigotmc-repo</id>
@@ -74,11 +63,6 @@
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
