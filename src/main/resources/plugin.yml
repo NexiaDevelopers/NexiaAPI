@@ -1,0 +1,7 @@
+name: NexiaAPI
+version: '${project.version}'
+main: net.nexia.nexiaapi.NexiaAPI
+api-version: 1.19
+authors: [ HeadMonitor ]
+description: '${project.description}'
+website: https://www.playnexia.net/
