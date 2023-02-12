@@ -6,7 +6,7 @@
 
     <groupId>net.nexia</groupId>
     <artifactId>NexiaAPI</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <name>NexiaAPI</name>
@@ -72,6 +72,12 @@
             <artifactId>spigot-api</artifactId>
             <version>1.19.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.classgraph</groupId>
+            <artifactId>classgraph</artifactId>
+            <version>4.8.154</version>
         </dependency>
     </dependencies>
 </project>
