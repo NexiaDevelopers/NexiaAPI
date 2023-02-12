@@ -15,7 +15,7 @@ import java.util.List;
 public class Commander
 {
 
-    public static void CommandArguments(String baseCommandClass, String pkg, String permissionNode, CommandSender sender, Command cmd, String label, String[] args)
+    public static void CommandArguments(ClassLoader classLoader, String baseCommandClass, String pkg, String permissionNode, CommandSender sender, Command cmd, String label, String[] args)
     {
         try (ScanResult scanResult = new ClassGraph().acceptPackages(pkg).scan())
         {
@@ -39,7 +39,7 @@ public class Commander
                     }
 
                     //Calls the class constructor
-                    Class.forName(pkg).getDeclaredConstructor(argumentTypes).newInstance(sender, cmd, label, args);
+                    classLoader.loadClass(pkg).getDeclaredConstructor(argumentTypes).newInstance(sender, cmd, label, args);
                     return;
                 }
                 catch (InstantiationException | IllegalAccessException | InvocationTargetException | ClassNotFoundException | NoSuchMethodException e)
