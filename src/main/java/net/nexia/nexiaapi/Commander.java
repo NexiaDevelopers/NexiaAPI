@@ -39,7 +39,7 @@ public class Commander
                     }
 
                     //Calls the class constructor
-                    Class.forName("net.nexia.tradingcards.Commands.Give").getDeclaredConstructor(argumentTypes).newInstance(sender, cmd, label, args);
+                    Class.forName(pkg).getDeclaredConstructor(argumentTypes).newInstance(sender, cmd, label, args);
                     return;
                 }
                 catch (InstantiationException | IllegalAccessException | InvocationTargetException | ClassNotFoundException | NoSuchMethodException e)
