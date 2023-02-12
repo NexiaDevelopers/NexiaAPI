@@ -39,14 +39,18 @@ public class Commander
                     }
 
                     //Calls the class constructor
-                    classLoader.loadClass(pkg).getDeclaredConstructor(argumentTypes).newInstance(sender, cmd, label, args);
+                    classLoader.loadClass(pkg + "." + className).getDeclaredConstructor(argumentTypes).newInstance(sender, cmd, label, args);
                     return;
                 }
                 catch (InstantiationException | IllegalAccessException | InvocationTargetException | ClassNotFoundException | NoSuchMethodException e)
                 {
-                    throw new RuntimeException(e);
+                //   throw new RuntimeException(e);
                 }
             }
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
         }
     }
 
