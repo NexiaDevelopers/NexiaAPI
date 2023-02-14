@@ -8,7 +8,7 @@ For more information visit the [Wiki](https://github.com/NexiaDevelopers/NexiaAP
 ### Maven
 
 NexiaAPI is on [JitPack](https://jitpack.io/). So the JitPack repository needs to be added in **pom.xml**.
-```
+```xml
 <repository>
   <id>jitpack.io</id>
   <url>https://jitpack.io</url>
@@ -16,7 +16,7 @@ NexiaAPI is on [JitPack](https://jitpack.io/). So the JitPack repository needs t
 ```
 
 Finally NexiaAPI needs to be added as a dependency in *pom.xml**. (Replace **[VERSION]** with the version you want to use.
-```
+```xml
 <dependency>
   <groupId>com.github.NexiaDevelopers</groupId>
   <artifactId>NexiaAPI</artifactId>
