@@ -1,6 +1,5 @@
 package net.nexia.nexiaapi;
 
-import dev.dbassett.skullcreator.SkullCreator;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
@@ -48,14 +47,6 @@ public class ItemsFromFile
                 if (section == null) return null;
 
                 ItemStack item = new ItemStack(Material.valueOf(section.getString("Type")));
-
-                //Skulls
-                if (item.getType() == Material.PLAYER_HEAD)
-                {
-                    String texture = section.getString("Texture");
-                    items.add(SkullCreator.itemFromBase64(Objects.requireNonNull(texture)));
-                    continue;
-                }
 
                 //General Items
                 ItemMeta itemMeta = item.getItemMeta();
