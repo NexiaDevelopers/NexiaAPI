@@ -1,7 +1,6 @@
 package net.nexia.nexiaapi;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
+import dev.dbassett.skullcreator.SkullCreator;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
@@ -10,11 +9,12 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.io.File;
-import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @SuppressWarnings("unused")
 public class ItemsFromFile
@@ -47,10 +47,18 @@ public class ItemsFromFile
 
                 if (section == null) return null;
 
-                //General Items
                 ItemStack item = new ItemStack(Material.valueOf(section.getString("Type")));
-                ItemMeta itemMeta = item.getItemMeta();
 
+                //Skulls
+                if (item.getType() == Material.PLAYER_HEAD)
+                {
+                    String texture = section.getString("Texture");
+                    items.add(SkullCreator.itemFromBase64(Objects.requireNonNull(texture)));
+                    continue;
+                }
+
+                //General Items
+                ItemMeta itemMeta = item.getItemMeta();
                 if (itemMeta == null) return null;
 
                 //Lore
@@ -73,30 +81,8 @@ public class ItemsFromFile
 
                 item.setItemMeta(itemMeta);
 
-                //Skulls
-                if (item.getType() == Material.PLAYER_HEAD)
-                {
-                    SkullMeta itemMetaSkull = (SkullMeta) item.getItemMeta();
-
-                    GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-                    profile.getProperties().put("textures", new Property("textures", section.getString("Texture")));
-                    Field field;
-                    try
-                    {
-                        field = itemMetaSkull.getClass().getDeclaredField("profile");
-                        field.setAccessible(true);
-                        field.set(itemMetaSkull, profile);
-                    }
-                    catch (NoSuchFieldException | IllegalAccessException e)
-                    {
-                        e.printStackTrace();
-                        return null;
-                    }
-
-                    item.setItemMeta(itemMetaSkull);
-                }
-
-                items.add(item); //Add item to list
+                //Add item to list
+                items.add(item);
             }
         }
 
