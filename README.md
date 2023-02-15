@@ -3,7 +3,7 @@ Minecraft library/plugin that extends SpigotAPI with some simple and useful meth
 
 For more information visit the [Wiki](https://github.com/NexiaDevelopers/NexiaAPI/wiki)!
 
-## Build Tools
+## Usage
 
 ### Maven
 
