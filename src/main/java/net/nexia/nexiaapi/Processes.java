@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -169,6 +170,20 @@ public class Processes
         {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Gives an Item to a Player.
+     * If the Player's Inventory is full it will drop the Item to the Player's location.
+     * @param player The Player to give the Item to.
+     * @param item The Item to give to the Player.
+     */
+    public static void giveToPlayer(Player player, ItemStack item)
+    {
+        if (player.getInventory().firstEmpty() == -1)
+            player.getWorld().dropItem(player.getLocation(), item);
+        else
+            player.getInventory().addItem(item);
     }
 
 }
