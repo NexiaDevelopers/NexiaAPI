@@ -15,7 +15,7 @@ NexiaAPI is on [JitPack](https://jitpack.io/). So the JitPack repository needs t
 </repository>
 ```
 
-Finally NexiaAPI needs to be added as a dependency in *pom.xml**. (Replace **[VERSION]** with the version you want to use.
+Finally NexiaAPI needs to be added as a dependency in **pom.xml**. (Replace **[VERSION]** with the version you want to use.
 ```xml
 <dependency>
   <groupId>com.github.NexiaDevelopers</groupId>
