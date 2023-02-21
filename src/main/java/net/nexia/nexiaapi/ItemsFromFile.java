@@ -68,7 +68,7 @@ public class ItemsFromFile
                     itemMeta.addEnchant(Objects.requireNonNull(Enchantment.getByKey(key)), (Integer) e.get(e.keySet().toArray()[1]), true);
                 }
 
-                if (section.getBoolean("HideEnchants")) itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS); //If enabled hide enchants
+                if (section.getBoolean("HideEnchantments")) itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS); //If enabled hide enchants
 
                 item.setItemMeta(itemMeta);
 
