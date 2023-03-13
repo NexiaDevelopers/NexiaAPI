@@ -8,6 +8,8 @@ Minecraft library/plugin that extends SpigotAPI with some simple and useful meth
 
 For more information visit the [Wiki](https://github.com/NexiaDevelopers/NexiaAPI/wiki)!
 
+Developed by [HeadMonitor](https://github.com/HeadMonitor) for the [Nexia Network](https://www.playnexia.net/).
+
 ## Usage
 
 ### JitPack
