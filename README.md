@@ -10,7 +10,7 @@ For more information visit the [Wiki](https://github.com/NexiaDevelopers/NexiaAP
 
 Developed by [HeadMonitor](https://github.com/HeadMonitor) for the [Nexia Network](https://www.playnexia.net/).
 
-## Usage
+## How To Use
 
 ### JitPack
 
