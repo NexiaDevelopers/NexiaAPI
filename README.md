@@ -21,6 +21,16 @@ NexiaAPI is on [JitPack](https://jitpack.io/#NexiaDevelopers/NexiaAPI) so you ca
 
 You can add NexiaAPI as a dependency manually in your project by using the .jar file. You can locate it in the [Releases](https://github.com/NexiaDevelopers/NexiaAPI/releases) section.
 
+## FAQ
+
+- **Q**: I have an issue, found a bug or want to request a feature. \
+  **A**: You can leave a comment on the [Discussion](https://blank.org) tab, or join our [Discord](https://blank.org) 
+         server.
+         
+- **Q**: If I request a feature what are the chances of it being accepted? How long will it take to implement? \
+  **A**: The chances are very high! We want the Plugin to be as much useful to you as possible. As for the time to implement
+         this solely depends on the complexity of the feature, but it shouldn't take more than a few days!
+
 ---
 
 <p align="center">
