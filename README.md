@@ -10,7 +10,9 @@ For more information visit the [Wiki](https://github.com/NexiaDevelopers/NexiaAP
 
 Developed by [HeadMonitor](https://github.com/HeadMonitor) for the [Nexia Network](https://www.playnexia.net/).
 
-## How To Use
+<div align="center">
+ <img src="https://user-images.githubusercontent.com/62361708/225287989-95af818b-faa7-4f68-9970-acd6cf9c7dfc.png">
+</div>
 
 ### JitPack
 
@@ -21,7 +23,9 @@ NexiaAPI is on [JitPack](https://jitpack.io/#NexiaDevelopers/NexiaAPI) so you ca
 
 You can add NexiaAPI as a dependency manually in your project by using the .jar file. You can locate it in the [Releases](https://github.com/NexiaDevelopers/NexiaAPI/releases) section.
 
-## FAQ
+<div align="center">
+ <img src="https://user-images.githubusercontent.com/62361708/225288503-a789afa0-4be5-4ff4-a83f-9d28c4dda1ed.png">
+</div>
 
 - **Q**: I have an issue, found a bug or want to request a feature. \
   **A**: You can leave a comment on the [Discussion](https://blank.org) tab, or join our [Discord](https://blank.org) 
