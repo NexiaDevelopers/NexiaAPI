@@ -11,7 +11,7 @@ For more information visit the [Wiki](https://github.com/NexiaDevelopers/NexiaAP
 Developed by [HeadMonitor](https://github.com/HeadMonitor) for the [Nexia Network](https://www.playnexia.net/).
 
 <div align="center">
- <img src="https://user-images.githubusercontent.com/62361708/225287989-95af818b-faa7-4f68-9970-acd6cf9c7dfc.png">
+ <img src="https://user-images.githubusercontent.com/62361708/225291005-6b6bf7df-50bf-48f6-acbe-d50772ee865a.png">
 </div>
 
 ### JitPack
