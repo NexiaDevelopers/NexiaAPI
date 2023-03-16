@@ -1,4 +1,4 @@
-name: '${project.name}'
+name: NexiaAPI
 description: '${project.description}'
 version: '${project.version}'
 authors: [ HeadMonitor ]
