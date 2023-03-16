@@ -84,7 +84,7 @@ public class ItemsFromFile
         for (Map e : section.getMapList("Enchantments")) //Enchantments
         {
             String enchantmentName =  e.values().toArray()[0].toString();
-            NamespacedKey key = NamespacedKey.fromString("minecraft:" + enchantmentName);
+            NamespacedKey key = NamespacedKey.minecraft(enchantmentName);
             itemMeta.addEnchant(Objects.requireNonNull(Enchantment.getByKey(key)), (Integer) e.get(e.keySet().toArray()[1]), true);
         }
 
