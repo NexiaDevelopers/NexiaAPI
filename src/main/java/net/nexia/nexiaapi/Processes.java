@@ -64,10 +64,9 @@ public class Processes
      * @param lore Item lore.
      * @param material Item material.
      * @param quantity Item quantity.
-     * @param customModelData Custom Model Data number.
      * @return Returns ItemStack.
      */
-    public static ItemStack buildItem(String name, List<String> lore, Material material, int quantity, int customModelData)
+    public static ItemStack buildItem(String name, List<String> lore, Material material, int quantity)
     {
         ItemStack item = new ItemStack(material, quantity);
         ItemMeta itemMeta = item.getItemMeta();
@@ -76,7 +75,6 @@ public class Processes
             itemMeta.setDisplayName(color(name));
             lore = (lore != null) ? lore.stream().map(Processes::color).collect(Collectors.toList()) : null;
             itemMeta.setLore(lore);
-            itemMeta.setCustomModelData(customModelData);
             item.setItemMeta(itemMeta);
         }
         return item;
@@ -88,10 +86,9 @@ public class Processes
      * @param lore Item lore.
      * @param player Head's owner.
      * @param quantity Item quantity.
-     * @param customModelData Custom Model Data number.
      * @return Returns ItemStack.
      */
-    public static ItemStack buildSkull(String name, List<String> lore, UUID player, int quantity, int customModelData)
+    public static ItemStack buildSkull(String name, List<String> lore, UUID player, int quantity)
     {
         ItemStack playerSkull = new ItemStack(Material.PLAYER_HEAD, quantity);
         SkullMeta skullMeta = (SkullMeta) playerSkull.getItemMeta();
@@ -101,7 +98,6 @@ public class Processes
             skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(player));
             lore = (lore != null) ? lore.stream().map(Processes::color).collect(Collectors.toList()) : null;
             skullMeta.setLore(lore);
-            skullMeta.setCustomModelData(customModelData);
             playerSkull.setItemMeta(skullMeta);
         }
 
@@ -115,10 +111,9 @@ public class Processes
      * @param effect Potion effect.
      * @param color Potion color.
      * @param quantity Item quantity.
-     * @param customModelData Custom Model Data number.
      * @return Returns ItemStack.
      */
-    public static ItemStack buildPotion(String name, List<String> lore, PotionData effect, Color color, int quantity, int customModelData)
+    public static ItemStack buildPotion(String name, List<String> lore, PotionData effect, Color color, int quantity)
     {
         ItemStack potion = new ItemStack(Material.POTION, quantity);
         ItemMeta itemMeta = potion.getItemMeta();
@@ -130,7 +125,6 @@ public class Processes
             if (color != null) potionMeta.setColor(color);
             lore = (lore != null) ? lore.stream().map(Processes::color).collect(Collectors.toList()) : null;
             itemMeta.setLore(lore);
-            itemMeta.setCustomModelData(customModelData);
             potion.setItemMeta(itemMeta);
         }
 
