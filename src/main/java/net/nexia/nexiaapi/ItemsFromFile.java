@@ -1,19 +1,22 @@
 package net.nexia.nexiaapi;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.ProfileProperty;
+import com.google.j2objc.annotations.Property;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class ItemsFromFile
@@ -95,6 +98,19 @@ public class ItemsFromFile
         item.setItemMeta(itemMeta);
 
         return item;
+    }
+
+    public static void jitpackTest(Player player)
+    {
+        ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+
+        PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
+        profile.getProperties().add(new ProfileProperty("textures", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmJjMzE3YzQxODQ0NjZhNDk2MDYxMWZjZjlhZmVhMDk1NGNjMjgyZTNiMzJjMjYxNWI5Y2I3NDc2NGY0NzM1YiJ9fX0="));
+        skullMeta.setPlayerProfile(profile);
+        skull.setItemMeta(skullMeta);
+
+        player.getInventory().addItem(skull);
     }
 
 }
