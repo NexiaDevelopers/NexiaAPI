@@ -1,5 +1,6 @@
 package net.nexia.nexiaapi;
 
+
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
 import org.bukkit.Bukkit;
@@ -105,9 +106,9 @@ public class ItemsFromFile
 
             if (textureSection != null)
             {
-                PlayerProfile profile = (PlayerProfile) Bukkit.createPlayerProfile(UUID.randomUUID(), null);
+                PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
                 profile.getProperties().add(new ProfileProperty("textures", textureSection));
-                skullMeta.setOwnerProfile((org.bukkit.profile.PlayerProfile) profile);
+                skullMeta.setPlayerProfile(profile);
             }
             else if (playerSection != null)
             {
