@@ -108,14 +108,14 @@ public class ItemsFromFile
                 PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
                 profile.getProperties().add(new ProfileProperty("textures", textureSection));
                 skullMeta.setPlayerProfile(profile);
-
-                if (section.getString("Name") != null)
-                    skullMeta.setDisplayName(Processes.color(section.getString("Name"))); //Name
             }
             else if (playerSection != null)
             {
                 skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(playerSection));
             }
+
+            if (section.getString("Name") != null)
+                skullMeta.setDisplayName(Processes.color(section.getString("Name"))); //Name
 
             skullMeta.setLore(lore);
 
