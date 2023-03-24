@@ -8,7 +8,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -106,11 +105,9 @@ public class ItemsFromFile
 
             if (textureSection != null)
             {
-                Bukkit.broadcastMessage("TEST");
-
-                PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
+                PlayerProfile profile = (PlayerProfile) Bukkit.createPlayerProfile(UUID.randomUUID(), null);
                 profile.getProperties().add(new ProfileProperty("textures", textureSection));
-                skullMeta.setPlayerProfile(profile);
+                skullMeta.setOwnerProfile((org.bukkit.profile.PlayerProfile) profile);
             }
             else if (playerSection != null)
             {
