@@ -81,10 +81,6 @@ public class ItemsFromFile
 
         itemMeta.setLore(lore); //Lore
 
-        //Setting Meta
-        if (section.getString("Name") != null)
-            itemMeta.setDisplayName(Processes.color(section.getString("Name"))); //Name
-
         for (Map e : section.getMapList("Enchantments")) //Enchantments
         {
             String enchantmentName =  e.values().toArray()[0].toString();
@@ -109,6 +105,10 @@ public class ItemsFromFile
                 PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
                 profile.getProperties().add(new ProfileProperty("textures", textureSection));
                 skullMeta.setPlayerProfile(profile);
+
+                //Resetting the name so it doesn't get overridden
+                if (section.getString("Name") != null)
+                    itemMeta.setDisplayName(Processes.color(section.getString("Name"))); //Name
             }
             else if (playerSection != null)
             {
@@ -120,7 +120,9 @@ public class ItemsFromFile
             item.setItemMeta(skullMeta);
         }
         else
+        {
             item.setItemMeta(itemMeta);
+        }
 
         return item;
     }
