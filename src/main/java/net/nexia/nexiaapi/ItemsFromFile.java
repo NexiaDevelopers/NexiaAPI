@@ -81,6 +81,9 @@ public class ItemsFromFile
 
         itemMeta.setLore(lore); //Lore
 
+        if (section.getString("Name") != null)
+            itemMeta.setDisplayName(Processes.color(section.getString("Name"))); //Name
+
         for (Map e : section.getMapList("Enchantments")) //Enchantments
         {
             String enchantmentName =  e.values().toArray()[0].toString();
@@ -106,9 +109,8 @@ public class ItemsFromFile
                 profile.getProperties().add(new ProfileProperty("textures", textureSection));
                 skullMeta.setPlayerProfile(profile);
 
-                //Resetting the name so it doesn't get overridden
                 if (section.getString("Name") != null)
-                    itemMeta.setDisplayName(Processes.color(section.getString("Name"))); //Name
+                    skullMeta.setDisplayName(Processes.color(section.getString("Name"))); //Name
             }
             else if (playerSection != null)
             {
