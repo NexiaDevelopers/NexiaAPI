@@ -76,10 +76,11 @@ public class ItemsFromFile
         List<String> lore = new ArrayList<>();
         for (String d : section.getStringList("Description"))
             lore.add(Processes.color(d));
+        itemMeta.setLore(lore); //Lore
 
         //Setting Meta
-        itemMeta.setDisplayName(Processes.color(Objects.requireNonNull(section.getString("Name")))); //Name
-        itemMeta.setLore(lore); //Lore
+        if (section.getString("Name") != null)
+            itemMeta.setDisplayName(Processes.color(section.getString("Name"))); //Name
 
         for (Map e : section.getMapList("Enchantments")) //Enchantments
         {
@@ -88,7 +89,8 @@ public class ItemsFromFile
             itemMeta.addEnchant(Objects.requireNonNull(Enchantment.getByKey(key)), (Integer) e.get(e.keySet().toArray()[1]), true);
         }
 
-        if (section.getBoolean("HideEnchants")) itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS); //If enabled hide enchants
+        if (section.getBoolean("HideEnchantments"))
+            itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS); //If enabled hide enchants
 
         item.setItemMeta(itemMeta);
 
