@@ -2,7 +2,6 @@ package net.nexia.nexiaapi;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
-import com.google.j2objc.annotations.Property;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -79,6 +78,7 @@ public class ItemsFromFile
         List<String> lore = new ArrayList<>();
         for (String d : section.getStringList("Description"))
             lore.add(Processes.color(d));
+
         itemMeta.setLore(lore); //Lore
 
         //Setting Meta
@@ -95,22 +95,40 @@ public class ItemsFromFile
         if (section.getBoolean("HideEnchantments"))
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS); //If enabled hide enchants
 
-        item.setItemMeta(itemMeta);
+        //Skulls
+        if (item.getType() == Material.PLAYER_HEAD)
+        {
+            ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
+            SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+
+            String textureSection = section.getString("Texture");
+            String playerSection = section.getString("Player");
+
+            if (textureSection != null)
+            {
+                PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
+                profile.getProperties().add(new ProfileProperty("textures", textureSection));
+                skullMeta.setPlayerProfile(profile);
+                skull.setItemMeta(skullMeta);
+            }
+            else if (playerSection != null)
+            {
+                skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(playerSection));
+            }
+
+            skullMeta.setLore(lore);
+
+            item.setItemMeta(skullMeta);
+        }
+        else
+            item.setItemMeta(itemMeta);
 
         return item;
     }
 
     public static void jitpackTest(Player player)
     {
-        ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
-        SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
 
-        PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
-        profile.getProperties().add(new ProfileProperty("textures", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmJjMzE3YzQxODQ0NjZhNDk2MDYxMWZjZjlhZmVhMDk1NGNjMjgyZTNiMzJjMjYxNWI5Y2I3NDc2NGY0NzM1YiJ9fX0="));
-        skullMeta.setPlayerProfile(profile);
-        skull.setItemMeta(skullMeta);
-
-        player.getInventory().addItem(skull);
     }
 
 }
