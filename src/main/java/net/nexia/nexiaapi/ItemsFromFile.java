@@ -106,10 +106,11 @@ public class ItemsFromFile
 
             if (textureSection != null)
             {
+                Bukkit.broadcastMessage("TEST");
+
                 PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
                 profile.getProperties().add(new ProfileProperty("textures", textureSection));
                 skullMeta.setPlayerProfile(profile);
-                skull.setItemMeta(skullMeta);
             }
             else if (playerSection != null)
             {
@@ -124,11 +125,6 @@ public class ItemsFromFile
             item.setItemMeta(itemMeta);
 
         return item;
-    }
-
-    public static void jitpackTest(Player player)
-    {
-
     }
 
 }
