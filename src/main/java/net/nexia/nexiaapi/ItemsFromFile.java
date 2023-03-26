@@ -84,10 +84,6 @@ public class ItemsFromFile
                 itemMeta.setLore(lore);
             }
 
-            //Damage
-            if (key.equalsIgnoreCase("Damage"))
-                item.setDamage(section.getInt(key));
-
             //Enchants
             if (key.equalsIgnoreCase("Enchants"))
             {
