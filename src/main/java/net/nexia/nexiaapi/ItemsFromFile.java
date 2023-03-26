@@ -121,7 +121,7 @@ public class ItemsFromFile
             //Skulls
             if (item.getType() == Material.PLAYER_HEAD)
             {
-                SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
+                SkullMeta skullMeta = (SkullMeta) itemMeta;
 
                 if (key.equalsIgnoreCase("Texture")) //From Texture
                 {
