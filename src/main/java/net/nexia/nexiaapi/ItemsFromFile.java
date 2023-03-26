@@ -62,7 +62,6 @@ public class ItemsFromFile
 
         //Item
         ItemMeta itemMeta = item.getItemMeta();
-        if (itemMeta == null) return null;
 
         for (String key : section.getKeys(false))
         {
