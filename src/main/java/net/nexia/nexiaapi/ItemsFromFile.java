@@ -103,7 +103,7 @@ public class ItemsFromFile
             {
                 for (Object e : Objects.requireNonNull(section.getList(key)))
                 {
-                    String itemFlagName = e.toString();
+                    String itemFlagName = e.toString().toUpperCase();
                     ItemFlag itemFlag = ItemFlag.valueOf(itemFlagName);
 
                     itemMeta.addItemFlags(itemFlag);
