@@ -23,34 +23,24 @@ public class ItemsFromFile
 
     /**
      * Allows the creation of Items from a File. Check the wiki for file syntax.
-     * @param fileName The name of the file. Do not include file extension.
      * @param filePath The path of the file.
      * @return Returns a list of Items from the specified File.
      */
-    public static List<ItemStack> getItemsFromFile(String fileName, File filePath)
+    public static List<ItemStack> getItemsFromFile(File filePath)
     {
         //Items to Return
         List<ItemStack> items = new ArrayList<>();
 
-        File[] files = filePath.listFiles(); //Rewards Files
+        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(filePath);
 
-        if (files == null) return null;
-
-        for (File f : files)
+        for (String key : yaml.getKeys(false))
         {
-            if (!f.getName().equals(fileName + ".yml")) continue;
+            ConfigurationSection section = yaml.getConfigurationSection(key);
 
-            YamlConfiguration yaml = YamlConfiguration.loadConfiguration(f);
+            if (section == null) return null;
 
-            for (String y : yaml.getKeys(false))
-            {
-                ConfigurationSection section = yaml.getConfigurationSection(y);
-
-                if (section == null) return null;
-
-                //Add item to list
-                items.add(item(section));
-            }
+            //Add item to list
+            items.add(item(section));
         }
 
         return items;
@@ -74,56 +64,101 @@ public class ItemsFromFile
         ItemMeta itemMeta = item.getItemMeta();
         if (itemMeta == null) return null;
 
-        //Lore
-        List<String> lore = new ArrayList<>();
-        for (String d : section.getStringList("Description"))
-            lore.add(Processes.color(d));
-
-        itemMeta.setLore(lore); //Lore
-
-        if (section.getString("Name") != null)
-            itemMeta.setDisplayName(Processes.color(section.getString("Name"))); //Name
-
-        for (Map e : section.getMapList("Enchantments")) //Enchantments
+        for (String key : section.getKeys(false))
         {
-            String enchantmentName =  e.values().toArray()[0].toString();
-            NamespacedKey key = NamespacedKey.minecraft(enchantmentName);
-            itemMeta.addEnchant(Objects.requireNonNull(Enchantment.getByKey(key)), (Integer) e.get(e.keySet().toArray()[1]), true);
-        }
-
-        if (section.getBoolean("HideEnchantments"))
-            itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS); //If enabled hide enchants
-
-        //Skulls
-        if (item.getType() == Material.PLAYER_HEAD)
-        {
-            ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
-            SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
-
-            String textureSection = section.getString("Texture");
-            String playerSection = section.getString("Player");
-
-            if (textureSection != null)
+            //Display Name
+            if (key.equalsIgnoreCase("DisplayName"))
             {
-                PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
-                profile.getProperties().add(new ProfileProperty("textures", textureSection));
-                skullMeta.setPlayerProfile(profile);
-            }
-            else if (playerSection != null)
-            {
-                skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(playerSection));
+                itemMeta.setDisplayName(Processes.color(section.getString(key)));
+                continue;
             }
 
-            if (section.getString("Name") != null)
-                skullMeta.setDisplayName(Processes.color(section.getString("Name"))); //Name
+            //Lore
+            List<String> lore = new ArrayList<>();
+            if (key.equalsIgnoreCase("Lore"))
+            {
+                lore.addAll(section.getStringList(key));
+                itemMeta.setLore(lore);
+                continue;
+            }
 
-            skullMeta.setLore(lore);
+            //Enchants
+            if (key.equalsIgnoreCase("Enchants"))
+            {
+                for (Map e : section.getMapList(key))
+                {
+                    String enchantmentName = e.values().toArray()[0].toString();
+                    NamespacedKey namespacedKey = NamespacedKey.minecraft(enchantmentName);
 
-            item.setItemMeta(skullMeta);
-        }
-        else
-        {
-            item.setItemMeta(itemMeta);
+                    Enchantment enchant = Enchantment.getByKey(namespacedKey);
+
+                    if (enchant != null)
+                        itemMeta.addEnchant(enchant, (Integer) e.get(e.keySet().toArray()[1]), true);
+                }
+                continue;
+            }
+
+            //ItemFlags
+            if (key.equalsIgnoreCase("ItemFlags"))
+            {
+                for (Map e : section.getMapList(key))
+                {
+                    String itemFlagName = e.values().toArray()[0].toString();
+
+                    ItemFlag itemFlag = ItemFlag.valueOf(itemFlagName);
+
+                    itemMeta.addItemFlags(itemFlag);
+                }
+                continue;
+            }
+
+            //Unbreakable
+            if (key.equalsIgnoreCase("Unbreakable"))
+            {
+                itemMeta.setUnbreakable(section.getBoolean(key));
+                continue;
+            }
+
+            //Damage
+            if (key.equalsIgnoreCase("Damage"))
+            {
+                item.setDamage(section.getInt(key));
+                continue;
+            }
+
+            //Amount
+            if (key.equalsIgnoreCase("Amount"))
+            {
+                item.setAmount(section.getInt(key));
+                continue;
+            }
+
+            //Skulls
+            if (item.getType() == Material.PLAYER_HEAD)
+            {
+                ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
+                SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+
+                String textureSection = section.getString("Texture");
+                String playerSection = section.getString("Player");
+
+                if (textureSection != null)
+                {
+                    PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
+                    profile.getProperties().add(new ProfileProperty("textures", textureSection));
+                    skullMeta.setPlayerProfile(profile);
+                }
+                else if (playerSection != null)
+                {
+                    skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(playerSection));
+                }
+
+                skullMeta.setLore(lore);
+
+                item.setItemMeta(skullMeta);
+            }
+            else
+                item.setItemMeta(itemMeta);
         }
 
         return item;
