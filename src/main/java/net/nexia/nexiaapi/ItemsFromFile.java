@@ -125,14 +125,15 @@ public class ItemsFromFile
 
                 if (key.equalsIgnoreCase("Texture")) //From Texture
                 {
+                    Bukkit.broadcastMessage(key);
+                    Bukkit.broadcastMessage(section.getString(key));
                     PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
                     profile.getProperties().add(new ProfileProperty("textures", Objects.requireNonNull(section.getString(key))));
                     skullMeta.setPlayerProfile(profile);
                 }
-                else if (key.equalsIgnoreCase("Player")) //From Player
-                {
+
+                if (key.equalsIgnoreCase("Player")) //From Player
                     skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(Objects.requireNonNull(section.getString(key))));
-                }
 
                 skullMeta.setLore(lore);
 
