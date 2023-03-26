@@ -119,7 +119,7 @@ public class ItemsFromFile
                 itemMeta.setUnbreakable(section.getBoolean(key));
 
             //Skulls
-            if (key.equalsIgnoreCase("Texture") || key.equalsIgnoreCase("Player"))
+            if (item.getType() == Material.PLAYER_HEAD)
             {
                 SkullMeta skullMeta = (SkullMeta) itemMeta;
 
@@ -132,8 +132,6 @@ public class ItemsFromFile
 
                 if (key.equalsIgnoreCase("Player")) //From Player
                     skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(Objects.requireNonNull(section.getString(key))));
-
-                skullMeta.setLore(lore);
 
                 item.setItemMeta(skullMeta);
             }
