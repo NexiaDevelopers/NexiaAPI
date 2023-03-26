@@ -1,6 +1,5 @@
 package net.nexia.nexiaapi;
 
-
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
 import org.bukkit.Bukkit;
@@ -58,49 +57,57 @@ public class ItemsFromFile
 
     private static ItemStack item(ConfigurationSection section)
     {
-        ItemStack item = new ItemStack(Material.valueOf(section.getString("Type")));
-
-        //Item
-        ItemMeta itemMeta = item.getItemMeta();
+        ItemStack item = new ItemStack(Material.AIR);
 
         for (String key : section.getKeys(false))
         {
+            //Type
+            if (key.equalsIgnoreCase("Type"))
+                item.setType(Material.valueOf(section.getString(key)));
+
+            ItemMeta itemMeta = item.getItemMeta();
+
             //Display Name
             if (key.equalsIgnoreCase("DisplayName"))
-            {
                 itemMeta.setDisplayName(Processes.color(section.getString(key)));
-            }
+
+            //Amount
+            if (key.equalsIgnoreCase("Amount"))
+                item.setAmount(section.getInt(key));
 
             //Lore
             List<String> lore = new ArrayList<>();
             if (key.equalsIgnoreCase("Lore"))
             {
-                lore.addAll(section.getStringList(key));
+                for (String l : section.getStringList(key))
+                    lore.add(Processes.color(l));
                 itemMeta.setLore(lore);
             }
+
+            //Damage
+            if (key.equalsIgnoreCase("Damage"))
+                item.setDamage(section.getInt(key));
 
             //Enchants
             if (key.equalsIgnoreCase("Enchants"))
             {
                 for (Map e : section.getMapList(key))
                 {
-                    String enchantmentName = e.values().toArray()[0].toString();
+                    String enchantmentName = e.keySet().toArray()[0].toString().toLowerCase();
                     NamespacedKey namespacedKey = NamespacedKey.minecraft(enchantmentName);
-
                     Enchantment enchant = Enchantment.getByKey(namespacedKey);
 
                     if (enchant != null)
-                        itemMeta.addEnchant(enchant, (Integer) e.get(e.keySet().toArray()[1]), true);
+                        itemMeta.addEnchant(enchant, (Integer) e.get(e.keySet().toArray()[0]), true);
                 }
             }
 
             //ItemFlags
             if (key.equalsIgnoreCase("ItemFlags"))
             {
-                for (Map e : section.getMapList(key))
+                for (Object e : Objects.requireNonNull(section.getList(key)))
                 {
-                    String itemFlagName = e.values().toArray()[0].toString();
-
+                    String itemFlagName = e.toString();
                     ItemFlag itemFlag = ItemFlag.valueOf(itemFlagName);
 
                     itemMeta.addItemFlags(itemFlag);
@@ -109,21 +116,7 @@ public class ItemsFromFile
 
             //Unbreakable
             if (key.equalsIgnoreCase("Unbreakable"))
-            {
                 itemMeta.setUnbreakable(section.getBoolean(key));
-            }
-
-            //Damage
-            if (key.equalsIgnoreCase("Damage"))
-            {
-                item.setDamage(section.getInt(key));
-            }
-
-            //Amount
-            if (key.equalsIgnoreCase("Amount"))
-            {
-                item.setAmount(section.getInt(key));
-            }
 
             //Skulls
             if (item.getType() == Material.PLAYER_HEAD)
@@ -131,18 +124,15 @@ public class ItemsFromFile
                 ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
                 SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
 
-                String textureSection = section.getString("Texture");
-                String playerSection = section.getString("Player");
-
-                if (textureSection != null)
+                if (key.equalsIgnoreCase("Texture"))
                 {
                     PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
-                    profile.getProperties().add(new ProfileProperty("textures", textureSection));
+                    profile.getProperties().add(new ProfileProperty("textures", Objects.requireNonNull(section.getString(key))));
                     skullMeta.setPlayerProfile(profile);
                 }
-                else if (playerSection != null)
+                else if (key.equalsIgnoreCase("Player"))
                 {
-                    skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(playerSection));
+                    skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(Objects.requireNonNull(section.getString(key))));
                 }
 
                 skullMeta.setLore(lore);
