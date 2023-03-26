@@ -119,14 +119,12 @@ public class ItemsFromFile
                 itemMeta.setUnbreakable(section.getBoolean(key));
 
             //Skulls
-            if (item.getType() == Material.PLAYER_HEAD)
+            if (key.equalsIgnoreCase("Texture") || key.equalsIgnoreCase("Player"))
             {
                 SkullMeta skullMeta = (SkullMeta) itemMeta;
 
                 if (key.equalsIgnoreCase("Texture")) //From Texture
                 {
-                    Bukkit.broadcastMessage(key);
-                    Bukkit.broadcastMessage(section.getString(key));
                     PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
                     profile.getProperties().add(new ProfileProperty("textures", Objects.requireNonNull(section.getString(key))));
                     skullMeta.setPlayerProfile(profile);
