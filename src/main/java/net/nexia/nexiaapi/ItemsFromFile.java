@@ -121,16 +121,15 @@ public class ItemsFromFile
             //Skulls
             if (item.getType() == Material.PLAYER_HEAD)
             {
-                ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
-                SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+                SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
 
-                if (key.equalsIgnoreCase("Texture"))
+                if (key.equalsIgnoreCase("Texture")) //From Texture
                 {
                     PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
                     profile.getProperties().add(new ProfileProperty("textures", Objects.requireNonNull(section.getString(key))));
                     skullMeta.setPlayerProfile(profile);
                 }
-                else if (key.equalsIgnoreCase("Player"))
+                else if (key.equalsIgnoreCase("Player")) //From Player
                 {
                     skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(Objects.requireNonNull(section.getString(key))));
                 }
