@@ -69,7 +69,6 @@ public class ItemsFromFile
             if (key.equalsIgnoreCase("DisplayName"))
             {
                 itemMeta.setDisplayName(Processes.color(section.getString(key)));
-                continue;
             }
 
             //Lore
@@ -78,7 +77,6 @@ public class ItemsFromFile
             {
                 lore.addAll(section.getStringList(key));
                 itemMeta.setLore(lore);
-                continue;
             }
 
             //Enchants
@@ -94,7 +92,6 @@ public class ItemsFromFile
                     if (enchant != null)
                         itemMeta.addEnchant(enchant, (Integer) e.get(e.keySet().toArray()[1]), true);
                 }
-                continue;
             }
 
             //ItemFlags
@@ -108,28 +105,24 @@ public class ItemsFromFile
 
                     itemMeta.addItemFlags(itemFlag);
                 }
-                continue;
             }
 
             //Unbreakable
             if (key.equalsIgnoreCase("Unbreakable"))
             {
                 itemMeta.setUnbreakable(section.getBoolean(key));
-                continue;
             }
 
             //Damage
             if (key.equalsIgnoreCase("Damage"))
             {
                 item.setDamage(section.getInt(key));
-                continue;
             }
 
             //Amount
             if (key.equalsIgnoreCase("Amount"))
             {
                 item.setAmount(section.getInt(key));
-                continue;
             }
 
             //Skulls
