@@ -10,6 +10,12 @@ import java.net.URL;
 public class Versioner
 {
 
+    /**
+     * Gets the latest version of a Resource using the Resource ID.
+     * @param resourceId The Resource ID.
+     * @return Returns the version String.
+     * @throws IOException Throws IOException.
+     */
     public static String getLatestVersion(int resourceId) throws IOException
     {
         URL url = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId);
@@ -21,13 +27,28 @@ public class Versioner
         StringBuilder response = new StringBuilder();
 
         while ((inputLine = in.readLine()) != null)
-        {
             response.append(inputLine);
-        }
 
         in.close();
 
         return response.toString();
+    }
+
+    /**
+     * Compares the current to the latest version of a Resource from Spigot.
+     * @param currentVersion The current version of the Resource.
+     * @param resourceID The Resource ID to get the latest version from.
+     * @return Returns true if there is a new version available
+     */
+    public static boolean isNewVersionAvailable(String currentVersion, int resourceID) throws IOException
+    {
+        int currentVersionNumber = Integer.parseInt(currentVersion.replace(".", ""));
+        String latestVersion = getLatestVersion(resourceID);
+        int latestVersionNumber = Integer.parseInt(latestVersion.replace(".", ""));
+
+        System.out.println(currentVersionNumber);
+        System.out.println(latestVersionNumber);
+        return currentVersionNumber < latestVersionNumber;
     }
 
 }
