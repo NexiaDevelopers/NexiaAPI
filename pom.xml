@@ -6,7 +6,7 @@
 
     <groupId>net.nexia</groupId>
     <artifactId>NexiaAPI</artifactId>
-    <version>1.0.1</version>
+    <version>1.2.1</version>
     <packaging>jar</packaging>
 
     <name>NexiaAPI</name>
