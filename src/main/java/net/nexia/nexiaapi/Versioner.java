@@ -46,8 +46,6 @@ public class Versioner
         String latestVersion = getLatestVersion(resourceID);
         int latestVersionNumber = Integer.parseInt(latestVersion.replace(".", ""));
 
-        System.out.println(currentVersionNumber);
-        System.out.println(latestVersionNumber);
         return currentVersionNumber < latestVersionNumber;
     }
 
