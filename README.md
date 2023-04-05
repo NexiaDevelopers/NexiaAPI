@@ -31,12 +31,12 @@ You can get **Support**, **Request a Feature** or **Report a Bug** through the [
  <img src="https://user-images.githubusercontent.com/62361708/225288503-a789afa0-4be5-4ff4-a83f-9d28c4dda1ed.png">
 </div>
 
-- **Q**: I have an issue, found a bug or want to request a feature. \
-  **A**: You can leave a comment on the [Discussion](https://www.spigotmc.org/threads/1-8-1-19-4-%E2%9A%99%EF%B8%8Fnexiaapi%E2%9A%99%EF%B8%8F-useful-practical-methods.598656/) tab, or join our [Discord](https://discord.com/invite/ZfPq82BCM8) 
+- **Q:** I have an issue, found a bug or want to request a feature. \
+  **A:** You can leave a comment on the [Discussion](https://www.spigotmc.org/threads/1-8-1-19-4-%E2%9A%99%EF%B8%8Fnexiaapi%E2%9A%99%EF%B8%8F-useful-practical-methods.598656/) tab, or join our [Discord](https://discord.com/invite/ZfPq82BCM8) 
          server.
          
-- **Q**: If I request a feature what are the chances of it being accepted? How long will it take to implement? \
-  **A**: The chances are very high! We want the Plugin to be as much useful to you as possible. As for the time to implement
+- **Q:** If I request a feature what are the chances of it being accepted? How long will it take to implement? \
+  **A:** The chances are very high! We want the Plugin to be as much useful to you as possible. As for the time to implement
          this solely depends on the complexity of the feature, but it shouldn't take more than a few days!
 
 <div align="center">
