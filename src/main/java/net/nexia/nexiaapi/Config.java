@@ -23,6 +23,8 @@ public class Config {
 		if (!file.exists()) {
 			if (newFile) {
 				try {
+					file.mkdirs();
+					file.delete();
 					file.createNewFile();
 				} catch (IOException e) {
 					plugin.getLogger().severe(String.format("Failed to create file '%s'%n%s", getFileName(), e));
