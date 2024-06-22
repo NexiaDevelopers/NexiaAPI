@@ -1,7 +1,7 @@
 name: NexiaAPI
-description: '${project.description}'
-version: '${project.version}'
-authors: [ HeadMonitor ]
-website: https://www.playnexia.net/
+description: ${project.description}
+version: ${project.version}
+authors: [ ItsGeppy, PhileasFogg3, HeadMonitor ]
+website: ${project.url}
 main: net.nexia.nexiaapi.NexiaAPI
-api-version: 1.13
+api-version: 1.21

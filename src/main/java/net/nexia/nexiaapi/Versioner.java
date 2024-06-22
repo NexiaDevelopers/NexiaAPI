@@ -5,11 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URI;
 
-@SuppressWarnings("unused")
 public class Versioner
 {
-
     /**
      * Gets the latest version of a Resource using the Resource ID.
      * @param resourceId The Resource ID.
@@ -18,7 +17,7 @@ public class Versioner
      */
     public static String getLatestVersion(int resourceId) throws IOException
     {
-        URL url = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId);
+        URL url = URI.create("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId).toURL();
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
 
