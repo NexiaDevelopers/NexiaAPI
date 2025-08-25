@@ -1,4 +1,4 @@
-package net.nexia.nexiaapi;
+package net.nexia.nexiaapi.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

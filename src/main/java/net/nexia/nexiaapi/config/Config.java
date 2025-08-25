@@ -1,4 +1,4 @@
-package net.nexia.nexiaapi;
+package net.nexia.nexiaapi.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,10 +10,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Config {
 
-	private JavaPlugin plugin;
+	private final JavaPlugin plugin;
 	private YamlConfiguration data;
-	private String path;
-	private File file;
+	private final String path;
+	private final File file;
 
 	public Config(JavaPlugin plugin, String path, boolean newFile) {
 		this.plugin = plugin;
@@ -63,7 +63,7 @@ public class Config {
 
 		data.set(path, value);
 
-		if (Boolean.TRUE.equals(saveAfter)) {
+		if (saveAfter) {
 			save();
 		}
 

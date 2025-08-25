@@ -1,7 +1,10 @@
-name: NexiaAPI
+name: ${project.name}
 description: ${project.description}
 version: ${project.version}
 authors: [ ItsGeppy, PhileasFogg3, HeadMonitor ]
 website: ${project.url}
 main: net.nexia.nexiaapi.NexiaAPI
 api-version: 1.21
+commands:
+  guppy:
+    description: test
