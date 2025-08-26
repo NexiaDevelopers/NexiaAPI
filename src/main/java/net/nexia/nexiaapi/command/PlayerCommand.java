@@ -1,14 +1,18 @@
 package net.nexia.nexiaapi.command;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BiConsumer;
 
 public class PlayerCommand extends BaseCommand {
 
-    protected String permission = "";
+    protected String permission = null;
+
+    public PlayerCommand(String command) {
+        super(command);
+    }
 
     public PlayerCommand(String command, BiConsumer<CommandSender, String[]> function) {
         super(command, function);
@@ -19,29 +23,20 @@ public class PlayerCommand extends BaseCommand {
         this.permission = permission;
     }
 
-    public void setPermission(String permission) {
+    public void setPermission(@Nullable String permission) {
         this.permission = permission;
     }
 
     @Override
-    public void run(CommandSender sender, String[] args) {
+    public boolean canRun(CommandSender sender) {
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.RED + "This is a player command.");
-            return;
+            return false;
         }
-
-        if (!sender.hasPermission(permission)) {
-            sender.sendMessage(ChatColor.RED + "You're not allowed to run this command.");
-            return;
+        if (permission != null && !sender.hasPermission(permission)) {
+            return false;
         }
-
-        if (!condition.test(sender)) {
-            return;
-        }
-
-        function.accept(sender, args);
-
+        return condition.test(sender);
     }
 
 }

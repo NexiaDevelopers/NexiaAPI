@@ -28,6 +28,11 @@ public class CommandHandler implements TabExecutor {
             return;
         }
 
+        if (isPlaceholder(commandParts[0])) {
+            plugin.getLogger().severe("Command name cannot be a placeholder");
+            return;
+        }
+
         if (registeredCommands.stream().noneMatch(cmd -> cmd.fullCommand.startsWith(commandParts[0]))) {
             PluginCommand pluginCommand = plugin.getCommand(commandParts[0]);
 
@@ -50,14 +55,21 @@ public class CommandHandler implements TabExecutor {
         String fullCommand = String.format("%s %s", label, String.join(" ", args)).trim();
 
         // Ensure command is the correct size and matches with placeholder regex.
-        List<BaseCommand> applicableCommands = registeredCommands.stream()
+        Optional<BaseCommand> applicableCommand = registeredCommands.stream()
                 .filter(cmd -> cmd.getArgs().length == args.length)
                 .filter(cmd -> fullCommand.matches(PlaceholderSupplier.getRegexPattern(cmd.fullCommand, registeredSuppliers, commandSender)))
-                .toList();
+                .findFirst();
 
-        applicableCommands.forEach(cmd -> cmd.run(commandSender, args));
+        if (applicableCommand.isPresent()) {
+            BaseCommand cmd = applicableCommand.get();
 
-        if (applicableCommands.isEmpty()) {
+            if (!cmd.canRun(commandSender)) {
+                commandSender.sendMessage(ChatColor.RED + "Invalid command!");
+                return false;
+            }
+            cmd.run(commandSender, args);
+
+        } else {
             commandSender.sendMessage(ChatColor.RED + "Invalid command!");
             return false;
         }
@@ -74,28 +86,46 @@ public class CommandHandler implements TabExecutor {
                     int currentIdx = args.length - 1;
 
                     // Skip if too many arguments
-                    if (currentIdx >= parts.length) return Stream.empty();
+                    if (currentIdx >= parts.length) {
+                        return Stream.empty();
+                    }
 
-                    // Ensure previous parts still match. Placeholders can match anything.
+                    // Ensure previous parts still match.
                     for (int i = 0; i < currentIdx; i++) {
                         String part = parts[i];
-                        if (!(part.startsWith("${") && part.endsWith("}"))) {
-                            if (!part.equalsIgnoreCase(args[i])) return Stream.empty();
+
+                        if (isPlaceholder(part)) {
+                            List<String> values = PlaceholderSupplier.getPlaceholderValues(part, registeredSuppliers, commandSender);
+
+                            if (!values.contains(args[i])) {
+                                return Stream.empty();
+                            }
+                        } else if (!part.equalsIgnoreCase(args[i])) {
+                            return Stream.empty();
                         }
                     }
 
                     String next = parts[currentIdx];
 
-                    // If next part is a placeholder, get possible placeholder values.
-                    if (next.startsWith("${") && next.endsWith("}")) {
-                        return PlaceholderSupplier.getPlaceholderValues(next, registeredSuppliers, commandSender).stream();
+                    // Check command condition
+                    if (!cmd.canRun(commandSender)) {
+                        return Stream.empty();
                     }
-                    return Stream.of(next);
+
+                    // If next part is a placeholder, get possible placeholder values.
+                    if (!isPlaceholder(next)) {
+                        return Stream.of(next);
+                    }
+                    return PlaceholderSupplier.getPlaceholderValues(next, registeredSuppliers, commandSender).stream();
                 })
                 .filter(next -> next.toLowerCase().startsWith(args[args.length - 1].toLowerCase()))
                 .distinct()
                 .sorted()
                 .toList();
 
+    }
+
+    private boolean isPlaceholder(String part) {
+        return part.startsWith("${") && part.endsWith("}");
     }
 }

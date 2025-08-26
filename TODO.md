@@ -5,13 +5,14 @@
   - [ ] Paged views
   - [ ] Other helper methods
     - [ ] Fill
-- [ ] Commands
+- [x] Commands
+  - [x] Abstract base command
   - [x] Player commands
   - [x] Console commands
   - [x] Simple commands
-  - [ ] Placeholder supplier
-  - [ ] Automatic command registration
-  - [ ] Automatic auto completion
+  - [x] Placeholder supplier
+  - [x] Command registration
+  - [x] Auto completion
 - [ ] Chat
   - [ ] Buttons
 - [ ] State Machine
@@ -20,5 +21,5 @@
   - [ ] Timed state (Automatic)
 - [ ] Items
   - [ ] Loot tables
-
+- [ ] Dialogs
 

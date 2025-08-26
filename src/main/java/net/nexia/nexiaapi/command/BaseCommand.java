@@ -1,5 +1,6 @@
 package net.nexia.nexiaapi.command;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import java.util.*;
@@ -12,13 +13,23 @@ public abstract class BaseCommand {
     protected BiConsumer<CommandSender, String[]> function;
     protected Predicate<CommandSender> condition = (sender) -> true;
 
+    public BaseCommand(String command) {
+        this.fullCommand = command;
+    }
+
     public BaseCommand(String command, BiConsumer<CommandSender, String[]> function) {
         this.fullCommand = command;
         this.function = function;
     }
 
-    public void setCondition(Predicate<CommandSender> condition) {
+    public BaseCommand setFunction(BiConsumer<CommandSender, String[]> function) {
+        this.function = function;
+        return this;
+    }
+
+    public BaseCommand setCondition(Predicate<CommandSender> condition) {
         this.condition = condition;
+        return this;
     }
 
     public String[] getArgs() {
@@ -27,6 +38,16 @@ public abstract class BaseCommand {
         return Arrays.copyOfRange(parts, 1, parts.length);
     }
 
-    public abstract void run(CommandSender sender, String[] args);
+    public abstract boolean canRun(CommandSender sender);
+
+    public void run(CommandSender sender, String[] args) {
+
+        if (function == null) {
+            sender.sendMessage(ChatColor.RED + "This command has no function.");
+            return;
+        }
+        function.accept(sender, args);
+
+    }
 
 }

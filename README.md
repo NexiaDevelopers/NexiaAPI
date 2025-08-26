@@ -2,8 +2,6 @@
  <img src="https://user-images.githubusercontent.com/62361708/224549985-d6e658e3-eaa1-426f-9669-7dd4503407a5.png" width=256>
 </div>
 
-Minecraft library/plugin that extends SpigotAPI with some simple and useful methods.
-
 # How to use
 
 ## JitPack
