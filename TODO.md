@@ -22,4 +22,4 @@
 - [ ] Items
   - [ ] Loot tables
 - [ ] Dialogs
-
+- [ ] Documentation

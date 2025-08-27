@@ -19,7 +19,7 @@ public class CommandHandler implements TabExecutor {
         this.plugin = plugin;
     }
 
-    public void registerCommand(BaseCommand command) {
+    public void addCommand(BaseCommand command) {
 
         String[] commandParts = command.fullCommand.split(" ");
 
@@ -45,7 +45,7 @@ public class CommandHandler implements TabExecutor {
         registeredCommands.add(command);
     }
 
-    public void registerSupplier(PlaceholderSupplier placeholderSupplier) {
+    public void addSupplier(PlaceholderSupplier placeholderSupplier) {
         registeredSuppliers.add(placeholderSupplier);
     }
 

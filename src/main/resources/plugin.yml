@@ -8,3 +8,5 @@ api-version: 1.21
 commands:
   guppy:
     description: test
+  form:
+    description: goes to some unknown person
