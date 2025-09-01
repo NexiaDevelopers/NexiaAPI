@@ -30,6 +30,7 @@ public record PlaceholderSupplier(String name, Function<CommandSender, List<Stri
 
     public static String getRegexPattern(String command, Set<PlaceholderSupplier> suppliers, CommandSender sender) {
 
+        command = command.replaceAll("\\s?\\.\\.\\.", ".*").trim();
         Pattern placeholderPattern = Pattern.compile("\\$\\{([^}]*)}");
         Matcher matcher = placeholderPattern.matcher(command);
 

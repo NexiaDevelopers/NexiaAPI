@@ -33,12 +33,11 @@ public class CommandHandler implements TabExecutor {
         // Ensure command is the correct size and matches with placeholder regex.
         List<BaseCommand> applicableCommands = registeredCommands.stream()
                 .filter(cmd -> cmd.isDotted() ?
-                        cmd.args.length <= args.length :
+                        cmd.args.length-1 <= args.length :
                         cmd.args.length == args.length)
                 .filter(cmd -> {
                     String argsCombined = String.join(" ", args);
-                    return argsCombined.matches(PlaceholderSupplier.getRegexPattern(
-                            cmd.getArgsCombined().replace("...", ".+"), registeredSuppliers, commandSender));
+                    return argsCombined.matches(PlaceholderSupplier.getRegexPattern(cmd.getArgsCombined(), registeredSuppliers, commandSender));
                 })
                 .toList();
 
