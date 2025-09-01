@@ -34,7 +34,6 @@ public record PlaceholderSupplier(String name, Function<CommandSender, List<Stri
         Matcher matcher = placeholderPattern.matcher(command);
 
         while (matcher.find()) {
-
             Optional<PlaceholderSupplier> supplier = suppliers.stream()
                     .filter(s -> matcher.group(1).contains(s.name())).findFirst();
 

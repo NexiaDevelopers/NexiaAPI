@@ -11,38 +11,16 @@ import java.util.stream.Stream;
 
 public class CommandHandler implements TabExecutor {
 
-    private final JavaPlugin plugin;
     private final Set<BaseCommand> registeredCommands = new HashSet<>();
     private final Set<PlaceholderSupplier> registeredSuppliers = new HashSet<>();
 
-    public CommandHandler(JavaPlugin plugin) {
-        this.plugin = plugin;
+    public CommandHandler(JavaPlugin plugin, String command) {
+        Objects.requireNonNull(plugin.getCommand(command)).setExecutor(this);
+        Objects.requireNonNull(plugin.getCommand(command)).setTabCompleter(this);
     }
 
-    public void addCommand(BaseCommand command) {
-
-        String[] commandParts = command.fullCommand.split(" ");
-
-        if (commandParts.length == 0) {
-            plugin.getLogger().severe("Command name cannot be empty!");
-            return;
-        }
-
-        if (isPlaceholder(commandParts[0])) {
-            plugin.getLogger().severe("Command name cannot be a placeholder");
-            return;
-        }
-
-        if (registeredCommands.stream().noneMatch(cmd -> cmd.fullCommand.startsWith(commandParts[0]))) {
-            PluginCommand pluginCommand = plugin.getCommand(commandParts[0]);
-
-            if (pluginCommand == null) return;
-
-            pluginCommand.setExecutor(this);
-            pluginCommand.setTabCompleter(this);
-        }
-
-        registeredCommands.add(command);
+    public void addCommand(BaseCommand parts) {
+        registeredCommands.add(parts);
     }
 
     public void addSupplier(PlaceholderSupplier placeholderSupplier) {
@@ -52,28 +30,28 @@ public class CommandHandler implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String[] args) {
 
-        String fullCommand = String.format("%s %s", label, String.join(" ", args)).trim();
-
         // Ensure command is the correct size and matches with placeholder regex.
-        Optional<BaseCommand> applicableCommand = registeredCommands.stream()
-                .filter(cmd -> cmd.getArgs().length == args.length)
-                .filter(cmd -> fullCommand.matches(PlaceholderSupplier.getRegexPattern(cmd.fullCommand, registeredSuppliers, commandSender)))
-                .findFirst();
+        List<BaseCommand> applicableCommands = registeredCommands.stream()
+                .filter(cmd -> cmd.isDotted() ?
+                        cmd.args.length <= args.length :
+                        cmd.args.length == args.length)
+                .filter(cmd -> {
+                    String argsCombined = String.join(" ", args);
+                    return argsCombined.matches(PlaceholderSupplier.getRegexPattern(
+                            cmd.getArgsCombined().replace("...", ".+"), registeredSuppliers, commandSender));
+                })
+                .toList();
 
-        if (applicableCommand.isPresent()) {
-            BaseCommand cmd = applicableCommand.get();
-
-            if (!cmd.canRun(commandSender)) {
-                commandSender.sendMessage(ChatColor.RED + "Invalid command!");
-                return false;
-            }
-            cmd.run(commandSender, args);
-
-        } else {
+        if (applicableCommands.isEmpty()) {
             commandSender.sendMessage(ChatColor.RED + "Invalid command!");
             return false;
         }
 
+        for (BaseCommand cmd : applicableCommands) {
+            if (cmd.canRun(commandSender)) {
+                cmd.run(commandSender, args);
+            }
+        }
         return true;
     }
 
@@ -82,7 +60,7 @@ public class CommandHandler implements TabExecutor {
 
         return registeredCommands.stream()
                 .flatMap(cmd -> {
-                    String[] parts = cmd.getArgs();
+                    String[] parts = cmd.args;
                     int currentIdx = args.length - 1;
 
                     // Skip if too many arguments
@@ -106,6 +84,11 @@ public class CommandHandler implements TabExecutor {
                     }
 
                     String next = parts[currentIdx];
+
+                    // Skip if next part is "..."
+                    if (next.equals("...")) {
+                        return Stream.empty();
+                    }
 
                     // Check command condition
                     if (!cmd.canRun(commandSender)) {

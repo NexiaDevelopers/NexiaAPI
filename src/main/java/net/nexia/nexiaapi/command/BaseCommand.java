@@ -3,22 +3,21 @@ package net.nexia.nexiaapi.command;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 public abstract class BaseCommand {
 
-    protected final String fullCommand;
+    protected final String[] args;
     protected BiConsumer<CommandSender, String[]> function;
     protected Predicate<CommandSender> condition = (sender) -> true;
 
-    public BaseCommand(String command) {
-        this.fullCommand = command;
+    public BaseCommand(String args) {
+        this.args = !args.isBlank() ? args.split(" ") : new String[0];
     }
 
-    public BaseCommand(String command, BiConsumer<CommandSender, String[]> function) {
-        this.fullCommand = command;
+    public BaseCommand(String args, BiConsumer<CommandSender, String[]> function) {
+        this.args = args.split(" ");
         this.function = function;
     }
 
@@ -32,10 +31,12 @@ public abstract class BaseCommand {
         return this;
     }
 
-    public String[] getArgs() {
-        String[] parts = fullCommand.split(" ");
-        if (parts.length <= 1) return new String[0];
-        return Arrays.copyOfRange(parts, 1, parts.length);
+    public String getArgsCombined() {
+        return String.join(" ", args);
+    }
+
+    public boolean isDotted() {
+        return args.length > 0 && args[args.length - 1].equals("...");
     }
 
     public abstract boolean canRun(CommandSender sender);
